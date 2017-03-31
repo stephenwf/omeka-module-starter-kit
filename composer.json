@@ -1,5 +1,6 @@
 {
     "name": "stephenwf/omeka-module-starter-kit",
+    "license": "MIT",
     "description": "Omeka-S Module Starter kit",
     "type": "omeka-s-module",
     "authors": [
