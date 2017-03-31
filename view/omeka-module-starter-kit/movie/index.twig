@@ -1,0 +1,7 @@
+<h1>Search results</h1>
+{% for movie in movies %}
+    <div>
+        <h2>{{movie.Title}}</h2>
+        <img src="{{ movie.Poster }}" width="80" />
+    </div>
+{% endfor %}

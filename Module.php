@@ -2,32 +2,42 @@
 
 namespace OmekaModuleStarterKit;
 
-use LogicException;
-use Omeka\Entity\Job;
 use Omeka\Module\AbstractModule;
+use Symfony\Component\Yaml\Yaml as SymfonyYaml;
+use Zend\Config\Factory;
+use Zend\Config\Reader\Yaml as YamlConfig;
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Module extends AbstractModule
+class Module extends AbstractModule implements DependencyIndicatorInterface
 {
-    public function getConfig()
-    {
+    private $config;
+
+    public function loadVendor() {
         if (file_exists(__DIR__ . '/vendor/autoload.php')) {
             require_once __DIR__ . '/vendor/autoload.php';
         }
-//        if (file_exists(__DIR__ . '/config/module.config.yaml')) {
-//            $yaml = new Yaml(new Decoder);
-//            return $yaml->fromFile(__DIR__ . '/config/module.config.yaml');
-//        }
-        if (file_exists(__DIR__ . '/config/module.config.php')) {
-            return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getConfig()
+    {
+        if ($this->config) {
+            return $this->config;
         }
-        throw new LogicException('Configuration not found.');
+        // Load our composer dependencies.
+        $this->loadVendor();
+        // Load our configuration.
+        Factory::registerReader('yaml', new YamlConfig([SymfonyYaml::class, 'parse']));
+        $this->config = Factory::fromFiles(
+            glob(__DIR__ . '/config/*.config.*')
+        );
+        return $this->config;
     }
 
     public function install(ServiceLocatorInterface $serviceLocator)
     {
         $connection = $serviceLocator->get('Omeka\Connection');
-        $sqlToRunOnInstall = file_get_contents(__DIR__ . '/config/install.sql');;
+        $sqlToRunOnInstall = file_get_contents(__DIR__ . '/config/sql/install.sql');;
         if ($sqlToRunOnInstall) {
             $connection->exec($sqlToRunOnInstall);
         }
@@ -36,9 +46,14 @@ class Module extends AbstractModule
     public function uninstall(ServiceLocatorInterface $serviceLocator)
     {
         $connection = $serviceLocator->get('Omeka\Connection');
-        $sqlToRunOnUninstall = file_get_contents(__DIR__ . '/config/uninstall.sql');;
+        $sqlToRunOnUninstall = file_get_contents(__DIR__ . '/config/sql/uninstall.sql');;
         if ($sqlToRunOnUninstall) {
             $connection->exec($sqlToRunOnUninstall);
         }
+    }
+
+    public function getModuleDependencies()
+    {
+        return ['ZfcTwig'];
     }
 }

@@ -1,0 +1,12 @@
+##
+# Module Configuration
+#
+# This is exactly the same as all the other configuration, this example is using
+# YAML to show the variety of configuration you are free to use.
+# Although not shown in this starter kit you can also use JSON
+# and .ini files.
+#
+# The only requirement is the [dot]config[dot] extension in the file name.
+#
+
+movie_api_endpoint: http://www.omdbapi.com/
