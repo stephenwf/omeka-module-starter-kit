@@ -15,7 +15,7 @@ class Module extends AbstractModule {
     }
     if (file_exists(__DIR__ . '/config/module.config.yaml')) {
       $yaml = new Yaml();
-      return $yaml->fromFile('/config/module.config.yaml');
+      return $yaml->fromFile(__DIR__ . '/config/module.config.yaml');
     }
     if (file_exists(__DIR__ . '/config/module.config.php')) {
       return include __DIR__ . '/config/module.config.php';
