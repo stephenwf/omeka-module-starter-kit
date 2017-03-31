@@ -54,6 +54,9 @@ class Module extends AbstractModule implements DependencyIndicatorInterface
 
     public function getModuleDependencies()
     {
-        return ['ZfcTwig'];
+        // You can use this to enforce Twig in an installation if its required.
+        // See open bug (https://github.com/omeka/omeka-s/issues/868)
+        // return ['ZfcTwig'];
+        return [];
     }
 }

@@ -1,0 +1,15 @@
+<?php
+/**
+ * Movie index page
+ *
+ * @var $movies array
+ */
+?>
+
+<h1>Search results</h1>
+<?php foreach ($movies as $movie): ?>
+    <div>
+    <h2><?php echo $movie->Title; ?></h2>
+        <img src="<?php echo $movie->Poster; ?>" width="80"/>
+    </div>
+<?php endforeach; ?>
