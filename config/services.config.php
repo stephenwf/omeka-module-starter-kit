@@ -9,22 +9,13 @@
  * common library pulled in.
  */
 
-use GuzzleHttp\Client;
-use Interop\Container\ContainerInterface;
-use OmekaModuleStarterKit\Repository\MovieRepository;
-
-
 return [
     'service_manager' => [
         'invokables' => [],
         'factories' => [
-            'movies.guzzle' => function () {
-                return new Client();
-            },
-            'movies.repo' => function (ContainerInterface $c) {
-                $config = $c->get('Config'); // Module/app configuration.
-                return new MovieRepository($config['movie_api_endpoint'], $c->get('movies.guzzle'));
-            }
+//            'movies.guzzle' => function () {
+//                return new Client();
+//            },
         ]
     ]
 ];

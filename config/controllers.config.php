@@ -23,15 +23,12 @@
  * and leverage full control of how the dependencies are created.
  */
 
-use Interop\Container\ContainerInterface;
-use OmekaModuleStarterKit\Controller\MovieController;
-
 return [
     'controllers' => [
         'factories' => [
-            MovieController::class => function(ContainerInterface $c) {
-                return new MovieController($c->get('movies.repo'));
-            },
+//            MyController::class => function(\Interop\Container\ContainerInterface $c) {
+//                return new MyController($c->get('movies.repo'));
+//            },
         ]
     ]
 ];

@@ -10,7 +10,7 @@
 return [
     'view_manager' => [
         'template_path_stack' => [
-            OMEKA_PATH . '/modules/OmekaModuleStarterKit/view',
+            realpath( __DIR__ . '/../view'),
         ],
     ],
 ];
